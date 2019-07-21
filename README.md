@@ -1,2 +1,2 @@
 # GIPHY-API
-All about pigeons
+Cartoon Edition
