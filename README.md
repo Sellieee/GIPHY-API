@@ -1,2 +1,2 @@
 # GIPHY-API
-Cartoon Edition
+Games Edition
