@@ -1,2 +1,2 @@
 # GIPHY-API
-Sanrio Edition
+Cartoon Edition
