@@ -16,9 +16,9 @@ function showGame() {
             var gameDiv = $("<div>");
             var p = $("<p>").text("Rating: " + results[x].rating);
             var image = $("<img>");
-            gameDiv.append(p);
-            gameDiv.append(image);
+            gameDiv.append(p).append(image);
             console.log(response);
+            $("#images").prepend(gameDiv);
         }
     })
 }
@@ -32,7 +32,7 @@ function renderButtons() {
         a.addClass("games");
         a.attr("data-name", games[i]);
         a.text(games[i]);
-        button.appendTo(".giphy-button");
+        a.appendTo(".giphy-button");
     }
 }
 // Display movie data
