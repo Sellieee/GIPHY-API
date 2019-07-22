@@ -1,53 +1,56 @@
-// Array of games which will be the buttons.
-var games = ["Stardew Valley", "Overcooked 2", "Skyrim", "Don't Starve", "Tomb Raider"];
+$(document).ready(function () {
 
-// Display game buttons
-function renderButtons() {
-    $(".giphy-button").empty();
-    // Looping through game array
-    for (var i = 0; i < games.length; i++) {
-        var a = $("<button>");
-        a.addClass("games");
-        a.attr("data-name", games[i]);
-        a.text(games[i]);
-        a.appendTo(".giphy-button");
-    }
-}
+    // Array of games which will be the buttons.
+    var games = ["Stardew Valley", "Overcooked 2", "Skyrim", "Don't Starve", "Tomb Raider"];
 
-function displayGameinfo() {
-    var title = $(this).attr("data-name");
-    // API URL with API and query, limited to 10 searches
-    var queryURL = "api.giphy.com/v1/gifs/search?q=" + title + "&apikey=t864AJwF6m3Ehbb934dGP3WyLshTk7yA&limit=10";
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-        var results = response.data;
-        for (var x = 0; x < results.length; x++) {
-            var gameDiv = $("<div>");
-            var p = $("<p>").text("Rating: " + results[x].rating);
-            var image = $("<img>");
-            gameDiv.append(p).append(image);
-            console.log(response);
-            $("#images").prepend(gameDiv);
+    // Display game buttons
+    function renderButtons() {
+        $(".giphy-button").empty();
+        // Looping through game array
+        for (var i = 0; i < games.length; i++) {
+            var a = $("<button>");
+            a.addClass("games");
+            a.attr("data-name", games[i]);
+            a.text(games[i]);
+            a.appendTo(".giphy-button");
         }
+    }
+
+    function displayGameinfo() {
+        var title = $(this).attr("data-name");
+        // API URL with API and query, limited to 10 searches
+        var queryURL = "api.giphy.com/v1/gifs/search?q=" + title + "&apikey=t864AJwF6m3Ehbb934dGP3WyLshTk7yA&limit=10";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            var results = response.data;
+            for (var x = 0; x < results.length; x++) {
+                var gameDiv = $("<div>");
+                var p = $("<p>").text("Rating: " + results[x].rating);
+                var image = $("<img>");
+                gameDiv.append(p).append(image);
+                console.log(response);
+                $("#images").prepend(gameDiv);
+            }
+        })
+    };
+
+    // Display game data
+    $("#add-game").click(function (event) {
+        event.preventDefault();
+        var input = "";
+        console.log($("#game-input").val());
+        input = $("#game-input").val();
+        games.push(input);
+        console.log(games);
+        renderButtons();
     })
-};
 
-// Display game data
-$("#add-game").click(function (event) {
-    event.preventDefault();
-    var input = "";
-    console.log($("#game-input").val());
-    input = $("#game-input").val();
-    games.push(input);
-    console.log(games);
+    $(document).click(".games", displayGameinfo);
     renderButtons();
-})
-
-$(document).click(".games", displayGameinfo);
-renderButtons();
+});
 
 // On click - page takes 10 static gifs from GIPHY API
 // On click of images, the gifs animate, and on click again = back to static
