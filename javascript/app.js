@@ -1,7 +1,33 @@
 $(document).ready(function () {
 
     // Array of games which will be the buttons.
-    var games = ["Stardew Valley", "Overcooked 2", "Skyrim", "Don't Starve", "Tomb Raider"];
+    var games = ["Nier Automata", "Overcooked 2", "Skyrim", "Don't Starve", "Tomb Raider"];
+
+    function displayGameinfo() {
+        var title = $(this).attr("data-name");
+        // API URL with API and query, limited to 10 searches
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + title + "&api_key=t864AJwF6m3Ehbb934dGP3WyLshTk7yA&limit=10";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            for (var x = 0; x < response.data.length; x++) {
+                var gameDiv = $("<div>");
+                var p = $("<p>").text("Rating: " + response.data[x].rating);
+                var image = $("<img>");
+                image.attr("src", response.data[x].images.fixed_height_still.url);
+                image.attr("data-still", response.data[x].images.fixed_height_still.url);
+                image.attr("data-animate", response.data[x].images.fixed_height_still.url);
+                image.attr("data-state", "still");
+                image.attr("class", "gif");
+                console.log(state);
+                gameDiv.append(p).append(image);
+                console.log(response);
+                $(".images").prepend(gameDiv);
+            }
+        })
+    };
 
     // Display game buttons
     function renderButtons() {
@@ -16,27 +42,6 @@ $(document).ready(function () {
         }
     }
 
-    function displayGameinfo() {
-        var title = $(this).attr("data-name");
-        // API URL with API and query, limited to 10 searches
-        var queryURL = "api.giphy.com/v1/gifs/search?q=" + title + "&apikey=t864AJwF6m3Ehbb934dGP3WyLshTk7yA&limit=10";
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            console.log(response);
-            var results = response.data;
-            for (var x = 0; x < results.length; x++) {
-                var gameDiv = $("<div>");
-                var p = $("<p>").text("Rating: " + results[x].rating);
-                var image = $("<img>");
-                gameDiv.append(p).append(image);
-                console.log(response);
-                $("#images").prepend(gameDiv);
-            }
-        })
-    };
-
     // Display game data
     $("#add-game").click(function (event) {
         event.preventDefault();
@@ -46,17 +51,23 @@ $(document).ready(function () {
         games.push(input);
         console.log(games);
         renderButtons();
-    })
+    });
+
 
     $(document).click(".games", displayGameinfo);
     renderButtons();
+
+
+    $(".gif").on("click", function () {
+        var state = $(this).attr("data-state");
+        $(this).attr("src", ($(this).attr("data-animate")));
+        $(this).attr("data-state", "animate")
+        console.log(state);
+        if (state == "animate") {
+            $(this).attr("src", ($(this).attr("data-still")));
+            $(this).attr("data-state", "still");
+        } else if (state == "still") {
+            $(this).attr("src", ($(this).attr("data-animate")));
+        }
+    })
 });
-
-// On click - page takes 10 static gifs from GIPHY API
-// On click of images, the gifs animate, and on click again = back to static
-// Under each gif, display rating
-// Create form that takes user input box and adds to topics array
-// Create function to call that pushes into array and creates button on HTML
-
-// EXTRA:
-// Mobile responsive
