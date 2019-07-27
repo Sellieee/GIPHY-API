@@ -67,4 +67,10 @@ $(document).ready(function () {
             $(this).attr("data-state", "still");
         }
     })
+
+    // Restart Button
+    $("#restart").on("click", function () {
+        window.location.reload();
+    })
+
 });

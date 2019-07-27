@@ -10,15 +10,32 @@ h1 {
 }
 
 #search-bar {
-    color: rgb(255, 122, 122);
+    color:
 }
 
 button {
     background-color: transparent;
     border-color: transparent;
-    color: turquoise;
+    color: rgb(64, 184, 224);
     font-weight: bolder;
     font-size: 20px;
+}
+
+#restart,
+#add-game {
+    color: black;
+    background-color: rgb(255, 122, 122);
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid black
+}
+
+#game-search {
+    color: rgb(255, 122, 122);
+}
+
+p {
+    color: rgb(255, 122, 122);
 }
 
 footer {
